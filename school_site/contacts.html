@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - МБОУ СОШ №19 г. Белово</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19 г. Белово</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="structure.html">Структура</a></li>
+                <li><a href="contacts.html" class="active">Контакты</a></li>
+                <li><a href="feedback.html">Обратная связь</a></li>
+            </ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="AuthSystem.logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Контакты МБОУ СОШ №19 г. Белово</h1>
+
+            <div class="contacts-grid">
+                <div class="contact-card">
+                    <h2>🏫 Основная информация</h2>
+                    <div class="contact-info">
+                        <p><strong>Полное название:</strong> Муниципальное бюджетное общеобразовательное учреждение "Средняя общеобразовательная школа №19 города Белово"</p>
+                        <p><strong>Юридический адрес:</strong> 652645, Кемеровская область, г. Белово, пгт. Новый Городок, ул. Гражданская, 16</p>
+                        <p><strong>Телефон/факс:</strong> +7 (38452) 6-85-41</p>
+                        <p><strong>Электронная почта:</strong> school19-belovo@mail.ru</p>
+                        <p><strong>Официальный сайт:</strong> http://school19-belovo.ucoz.ru/</p>
+                        <p><strong>Директор:</strong> Рузанкина Татьяна Владимировна</p>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h2>👑 Администрация школы</h2>
+                    <div class="contact-info">
+                        <p><strong>Директор:</strong> Рузанкина Татьяна Владимировна</p>
+                        <p><strong>Заместитель директора по УВР:</strong> Иванова Мария Петровна</p>
+                        <p><strong>Заместитель директора по ВР:</strong> Петров Алексей Владимирович</p>
+                        <p><strong>Заместитель директора по начальной школе:</strong> Сидорова Елена Ивановна</p>
+                        <p><strong>Заместитель директора по безопасности:</strong> Козлов Сергей Николаевич</p>
+                        <p><strong>Секретарь учебной части:</strong> +7 (38452) 6-85-41</p>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h2>📞 Контакты подразделений</h2>
+                    <div class="contact-info">
+                        <h3>👶 Начальная школа (мл.19)</h3>
+                        <p><strong>Руководитель:</strong> Васильева Ольга Леонидовна</p>
+                        <p><strong>Телефон:</strong> +7 (38452) 6-85-41 (доб. 101)</p>
+                        <p><strong>Часы приема:</strong> Пн-Пт 14:00-16:00</p>
+
+                        <h3>👦 Средняя школа (ср.27)</h3>
+                        <p><strong>Руководитель:</strong> Николаев Дмитрий Сергеевич</p>
+                        <p><strong>Телефон:</strong> +7 (38452) 6-85-41 (доб. 102)</p>
+                        <p><strong>Часы приема:</strong> Пн-Пт 15:00-17:00</p>
+
+                        <h3>👨‍🎓 Старшая школа (ст.38)</h3>
+                        <p><strong>Руководитель:</strong> Федорова Галина Михайловна</p>
+                        <p><strong>Телефон:</strong> +7 (38452) 6-85-41 (доб. 103)</p>
+                        <p><strong>Часы приема:</strong> Вт, Чт 16:00-18:00</p>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h2>🕒 Режим работы</h2>
+                    <div class="contact-info">
+                        <p><strong>Администрация:</strong> Пн-Пт: 8:00-17:00</p>
+                        <p><strong>Учебная часть:</strong> Пн-Пт: 8:30-16:30</p>
+                        <p><strong>Бухгалтерия:</strong> Пн-Пт: 9:00-16:00</p>
+                        <p><strong>Медицинский кабинет:</strong> Пн-Пт: 8:30-15:30</p>
+                        <p><strong>Библиотека:</strong> Пн-Пт: 9:00-16:00</p>
+                        <p><strong>Столовая:</strong> Пн-Пт: 8:00-16:00</p>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h2>📧 Электронные сервисы</h2>
+                    <div class="contact-info">
+                        <p><strong>Электронный дневник:</strong> https://cabinet.ruobr.ru</p>
+                        <p><strong>Образовательная платформа:</strong> https://www.yaklass.ru</p>
+                        <p><strong>Горячая линия по вопросам образования:</strong> 8-800-100-90-50</p>
+                        <p><strong>Телефон доверия для детей и подростков:</strong> 8-800-2000-122</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>МБОУ СОШ №19 г. Белово</h3>
+                    <p>652645, Кемеровская обл., г. Белово, пгт. Новый Городок, ул. Гражданская, 16</p>
+                    <p>Телефон: +7 (38452) 6-85-41</p>
+                    <p>Email: school19-belovo@mail.ru</p>
+                    <p>Директор: Рузанкина Татьяна Владимировна</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="structure.html">Структура школы</a></li>
+                        <li><a href="schedule.html">Расписание</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-structure">
+                    <h3>Наши подразделения</h3>
+                    <ul>
+                        <li>🏫 Начальная школа (мл.19)</li>
+                        <li>🏫 Средняя школа (ср.27)</li>
+                        <li>🏫 Старшая школа (ст.38)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <style>
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-card h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-info h3 {
+            color: #e74c3c;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .contact-info ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</body>
+</html>

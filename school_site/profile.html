@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - МБОУ СОШ №19</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+        .users-table, .feedbacks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            min-width: 800px;
+        }
+        .users-table th, .users-table td,
+        .feedbacks-table th, .feedbacks-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+        .users-table th, .feedbacks-table th {
+            background: #2c3e50;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        .role-badge, .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .role-admin { background: #e74c3c; color: white; }
+        .role-teacher { background: #3498db; color: white; }
+        .role-student { background: #27ae60; color: white; }
+        .role-parent { background: #f39c12; color: white; }
+        .status-new { background: #3498db; color: white; }
+        .status-read { background: #95a5a6; color: white; }
+        .status-answered { background: #27ae60; color: white; }
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 12px;
+        }
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 12px;
+        }
+        .feedback-message {
+            max-width: 200px;
+            word-wrap: break-word;
+            font-size: 13px;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .tab-button {
+            padding: 8px 15px;
+            border: none;
+            background: #ecf0f1;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .tab-button.active {
+            background: #3498db;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .stats {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .admin-panel {
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+            .tab-button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .users-table th, .users-table td,
+            .feedbacks-table th, .feedbacks-table td {
+                padding: 6px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19 г. Белово</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="structure.html">Структура</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="feedback.html">Обратная связь</a></li>
+            </ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Личный кабинет</h1>
+
+            <div class="profile-card">
+                <h2>👤 Информация о пользователе</h2>
+                <div id="profile-info" class="profile-info">
+                    <p><strong>ФИО:</strong> <span id="profile-name">Загрузка...</span></p>
+                    <p><strong>Email:</strong> <span id="profile-email">Загрузка...</span></p>
+                    <p><strong>Роль:</strong> <span id="profile-role">Загрузка...</span></p>
+                    <p><strong>Дата регистрации:</strong> <span id="profile-date">Загрузка...</span></p>
+                    <p><strong>Статус:</strong> <span id="profile-status">Загрузка...</span></p>
+                </div>
+
+                <div id="admin-features" class="role-section" style="display: none;">
+                    <h3>⚙️ Панель администратора</h3>
+
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="showTab('users-tab')">👥 Пользователи</button>
+                        <button class="tab-button" onclick="showTab('feedbacks-tab')">💬 Обратная связь</button>
+                        <button class="tab-button" onclick="showTab('schedule-tab')">📅 Расписание</button>
+                    </div>
+
+                    <div id="users-tab" class="tab-content active">
+                        <h4>Управление пользователями</h4>
+                        <div class="stats" id="users-stats">Загрузка...</div>
+                        <div class="table-container">
+                            <div id="users-list">
+                                <p>Загрузка пользователей...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="feedbacks-tab" class="tab-content">
+                        <h4>Обратная связь от пользователей</h4>
+                        <div class="stats" id="feedbacks-stats">Загрузка...</div>
+                        <div class="table-container">
+                            <div id="feedbacks-list">
+                                <p>Загрузка обращений...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="schedule-tab" class="tab-content">
+                        <h4>Управление расписанием</h4>
+                        <div class="stats">
+                            <p>📊 Функционал управления расписанием будет добавлен в следующем обновлении</p>
+                        </div>
+                        <button class="btn-primary" onclick="alert('Функция в разработке')">Редактировать расписание</button>
+                    </div>
+                </div>
+
+                <!-- Остальные роли -->
+                <div id="teacher-features" class="role-section" style="display: none;">
+                    <h3>👨‍🏫 Функции преподавателя</h3>
+                    <div class="teacher-actions">
+                        <button class="btn-primary" onclick="viewGrades()">📝 Журнал успеваемости</button>
+                        <button class="btn-primary" onclick="addHomework()">📚 Добавить задание</button>
+                        <button class="btn-primary" onclick="viewStudents()">👥 Мои ученики</button>
+                    </div>
+                </div>
+
+                <div id="student-features" class="role-section" style="display: none;">
+                    <h3>🎒 Функции ученика</h3>
+                    <div class="student-actions">
+                        <button class="btn-primary" onclick="viewMyGrades()">🎓 Мои оценки</button>
+                        <button class="btn-primary" onclick="viewHomework()">📖 Домашние задания</button>
+                        <button class="btn-primary" onclick="viewSchedule()">⏰ Мое расписание</button>
+                    </div>
+                </div>
+
+                <div id="parent-features" class="role-section" style="display: none;">
+                    <h3>👨‍👩‍👧‍👦 Функции родителя</h3>
+                    <div class="parent-actions">
+                        <button class="btn-primary" onclick="viewChildGrades()">📊 Успеваемость ребенка</button>
+                        <button class="btn-primary" onclick="viewAttendance()">📅 Посещаемость</button>
+                        <button class="btn-primary" onclick="contactTeacher()">📞 Связаться с учителем</button>
+                    </div>
+                </div>
+
+                <div class="text-center" style="margin-top: 2rem;">
+                    <button onclick="logout()" class="btn-logout">🚪 Выйти из аккаунта</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>МБОУ СОШ №19 г. Белово</h3>
+                    <p>652645, Кемеровская обл., г. Белово, пгт. Новый Городок, ул. Гражданская, 16</p>
+                    <p>Телефон: +7 (38452) 6-85-41</p>
+                    <p>Email: school19-belovo@mail.ru</p>
+                    <p>Директор: Рузанкина Татьяна Владимировна</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="structure.html">Структура школы</a></li>
+                        <li><a href="schedule.html">Расписание</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-structure">
+                    <h3>Наши подразделения</h3>
+                    <ul>
+                        <li>🏫 Начальная школа (мл.19)</li>
+                        <li>🏫 Средняя школа (ср.27)</li>
+                        <li>🏫 Старшая школа (ст.38)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'users-tab') loadUsers();
+            else if (tabName === 'feedbacks-tab') loadFeedbacks();
+        }
+
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('school_users')) || [];
+            const usersList = document.getElementById('users-list');
+            const usersStats = document.getElementById('users-stats');
+
+            const stats = {
+                total: users.length,
+                admins: users.filter(u => u.role === 'admin').length,
+                teachers: users.filter(u => u.role === 'teacher').length,
+                students: users.filter(u => u.role === 'student').length,
+                parents: users.filter(u => u.role === 'parent').length
+            };
+
+            usersStats.innerHTML = `👥 Всего: ${stats.total} | ⚙️ Админы: ${stats.admins} | 👨‍🏫 Учителя: ${stats.teachers} | 🎒 Ученики: ${stats.students} | 👨‍👩‍👧‍👦 Родители: ${stats.parents}`;
+
+            if (users.length === 0) {
+                usersList.innerHTML = '<p>Пользователи не найдены</p>';
+                return;
+            }
+
+            let html = `<table class="users-table">
+                <thead><tr>
+                    <th>ID</th><th>ФИО</th><th>Email</th><th>Роль</th><th>Дата регистрации</th><th>Действия</th>
+                </tr></thead><tbody>`;
+
+            users.forEach(user => {
+                const roleClass = `role-${user.role}`;
+                html += `<tr>
+                    <td>${user.id}</td>
+                    <td><strong>${user.name}</strong></td>
+                    <td>${user.email}</td>
+                    <td><span class="role-badge ${roleClass}">${getRoleText(user.role)}</span></td>
+                    <td>${new Date(user.registeredAt).toLocaleDateString('ru-RU')}</td>
+                    <td>${user.role !== 'admin' ?
+                        `<button class="btn-danger" onclick="deleteUser(${user.id})" title="Удалить пользователя">🗑️ Удалить</button>` :
+                        '<em>Системный</em>'}</td>
+                </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            usersList.innerHTML = html;
+        }
+
+        function loadFeedbacks() {
+            const feedbacks = JSON.parse(localStorage.getItem('school_feedbacks')) || [];
+            const feedbacksList = document.getElementById('feedbacks-list');
+            const feedbacksStats = document.getElementById('feedbacks-stats');
+
+            const stats = {
+                total: feedbacks.length,
+                new: feedbacks.filter(f => f.status === 'new' || !f.status).length,
+                answered: feedbacks.filter(f => f.status === 'answered').length
+            };
+
+            feedbacksStats.innerHTML = `💬 Всего: ${stats.total} | 🔵 Новые: ${stats.new} | ✅ Отвечено: ${stats.answered}`;
+
+            if (feedbacks.length === 0) {
+                feedbacksList.innerHTML = '<p>Обращений пока нет</p>';
+                return;
+            }
+
+            let html = `<table class="feedbacks-table">
+                <thead><tr>
+                    <th>ID</th><th>От кого</th><th>Тема</th><th>Сообщение</th><th>Дата</th><th>Статус</th><th>Действия</th>
+                </tr></thead><tbody>`;
+
+            feedbacks.forEach(feedback => {
+                const statusClass = `status-${feedback.status || 'new'}`;
+                html += `<tr>
+                    <td>${feedback.id}</td>
+                    <td><strong>${feedback.name}</strong><br><small>${feedback.email}</small></td>
+                    <td>${getFeedbackTypeText(feedback.type)}</td>
+                    <td class="feedback-message" title="${feedback.message}">${feedback.message.substring(0, 50)}${feedback.message.length > 50 ? '...' : ''}</td>
+                    <td>${new Date(feedback.date).toLocaleDateString('ru-RU')}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(feedback.status)}</span></td>
+                    <td>
+                        <button class="btn-success" onclick="answerFeedback(${feedback.id})" title="Ответить">✉️ Ответить</button>
+                        <button class="btn-danger" onclick="deleteFeedback(${feedback.id})" title="Удалить">🗑️ Удалить</button>
+                    </td>
+                </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            feedbacksList.innerHTML = html;
+        }
+
+        function getFeedbackTypeText(type) {
+            const types = {
+                'question': '❓ Вопрос', 'suggestion': '💡 Предложение',
+                'complaint': '⚠️ Жалоба', 'praise': '⭐ Благодарность', 'other': '📄 Другое'
+            };
+            return types[type] || type;
+        }
+
+        function getStatusText(status) {
+            const statuses = {'new': 'Новое', 'read': 'Прочитано', 'answered': 'Отвечено'};
+            return statuses[status] || 'Новое';
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+                let users = JSON.parse(localStorage.getItem('school_users')) || [];
+                users = users.filter(user => user.id !== userId);
+                localStorage.setItem('school_users', JSON.stringify(users));
+                loadUsers();
+            }
+        }
+
+        function deleteFeedback(feedbackId) {
+            if (confirm('Удалить это обращение?')) {
+                let feedbacks = JSON.parse(localStorage.getItem('school_feedbacks')) || [];
+                feedbacks = feedbacks.filter(fb => fb.id !== feedbackId);
+                localStorage.setItem('school_feedbacks', JSON.stringify(feedbacks));
+                loadFeedbacks();
+            }
+        }
+
+        function answerFeedback(feedbackId) {
+            const response = prompt('Введите ответ на обращение:');
+            if (response) {
+                let feedbacks = JSON.parse(localStorage.getItem('school_feedbacks')) || [];
+                const feedback = feedbacks.find(fb => fb.id === feedbackId);
+                if (feedback) {
+                    feedback.adminResponse = response;
+                    feedback.status = 'answered';
+                    localStorage.setItem('school_feedbacks', JSON.stringify(feedbacks));
+                    loadFeedbacks();
+                    alert('✅ Ответ сохранен');
+                }
+            }
+        }
+
+        function loadProfile() {
+            const user = JSON.parse(localStorage.getItem('current_user'));
+            if (!user) { window.location.href = 'login.html'; return; }
+
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-email').textContent = user.email;
+            document.getElementById('profile-role').textContent = getRoleText(user.role);
+            document.getElementById('profile-date').textContent = new Date(user.registeredAt).toLocaleDateString('ru-RU');
+            document.getElementById('profile-status').textContent = '✅ Активный';
+
+            document.querySelectorAll('.role-section').forEach(el => el.style.display = 'none');
+
+            if (user.role === 'admin') {
+                document.getElementById('admin-features').style.display = 'block';
+                loadUsers();
+            } else if (user.role === 'teacher') {
+                document.getElementById('teacher-features').style.display = 'block';
+            } else if (user.role === 'student') {
+                document.getElementById('student-features').style.display = 'block';
+            } else if (user.role === 'parent') {
+                document.getElementById('parent-features').style.display = 'block';
+            }
+
+            updateHeader();
+        }
+
+        function getRoleText(role) {
+            const roles = {
+                'student': '🎒 Ученик', 'parent': '👨‍👩‍👧‍👦 Родитель',
+                'teacher': '👨‍🏫 Преподаватель', 'admin': '⚙️ Администратор'
+            };
+            return roles[role] || role;
+        }
+
+        function updateHeader() {
+            const user = JSON.parse(localStorage.getItem('current_user'));
+            const authButtons = document.getElementById('auth-buttons');
+            const userMenu = document.getElementById('user-menu');
+
+            if (user && authButtons && userMenu) {
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'flex';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('current_user');
+            window.location.href = 'index.html';
+        }
+
+        // Заглушки для других ролей
+        function viewGrades() { alert('📝 Здесь будет журнал успеваемости'); }
+        function addHomework() { alert('📚 Здесь будет добавление задания'); }
+        function viewStudents() { alert('👥 Здесь будет список учеников'); }
+        function viewMyGrades() { alert('🎓 Здесь будут ваши оценки'); }
+        function viewHomework() { alert('📖 Здесь будут домашние задания'); }
+        function viewSchedule() { alert('⏰ Здесь будет ваше расписание'); }
+        function viewChildGrades() { alert('📊 Здесь будет успеваемость ребенка'); }
+        function viewAttendance() { alert('📅 Здесь будет посещаемость'); }
+        function contactTeacher() { alert('📞 Здесь будет связь с учителем'); }
+
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+</html>

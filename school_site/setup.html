@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка - МБОУ СОШ №19</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 10px; }
+        .message { margin: 20px 0; padding: 15px; background: #e8f4fd; }
+    </style>
+</head>
+<body>
+    <h1>Быстрая настройка пользователей</h1>
+    <button onclick="setupUsers()">Добавить тестовых пользователей</button>
+    <button onclick="clearAll()">Очистить всех пользователей</button>
+    <div id="message"></div>
+
+    <script>
+        function setupUsers() {
+            const users = [
+                {
+                    id: 1,
+                    name: "Директор школы",
+                    email: "admin@school19.ru",
+                    password: "admin123",
+                    role: "admin",
+                    registeredAt: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    name: "Завуч",
+                    email: "zavuch@school19.ru",
+                    password: "zavuch123",
+                    role: "admin",
+                    registeredAt: new Date().toISOString()
+                },
+                {
+                    id: 3,
+                    name: "Иванова Мария Петровна",
+                    email: "teacher1@school19.ru",
+                    password: "teacher123",
+                    role: "teacher",
+                    subject: "Математика",
+                    registeredAt: new Date().toISOString()
+                },
+                {
+                    id: 4,
+                    name: "Петров Алексей Владимирович",
+                    email: "teacher2@school19.ru",
+                    password: "teacher123",
+                    role: "teacher",
+                    subject: "Русский язык",
+                    registeredAt: new Date().toISOString()
+                },
+                {
+                    id: 5,
+                    name: "Сидорова Елена Ивановна",
+                    email: "teacher3@school19.ru",
+                    password: "teacher123",
+                    role: "teacher",
+                    subject: "История",
+                    registeredAt: new Date().toISOString()
+                }
+            ];
+
+            localStorage.setItem('school_users', JSON.stringify(users));
+            document.getElementById('message').innerHTML = `
+                <div class="message">
+                    <h3>✅ Пользователи добавлены!</h3>
+                    <p><strong>Администраторы:</strong></p>
+                    <p>📧 admin@school19.ru | 🔑 admin123</p>
+                    <p>📧 zavuch@school19.ru | 🔑 zavuch123</p>
+                    <p><strong>Преподаватели:</strong></p>
+                    <p>📧 teacher1@school19.ru | 🔑 teacher123</p>
+                    <p>📧 teacher2@school19.ru | 🔑 teacher123</p>
+                    <p>📧 teacher3@school19.ru | 🔑 teacher123</p>
+                    <a href="login.html" style="color: blue;">➡️ Перейти к входу</a>
+                </div>
+            `;
+        }
+
+        function clearAll() {
+            localStorage.removeItem('school_users');
+            localStorage.removeItem('current_user');
+            localStorage.removeItem('school_feedbacks');
+            document.getElementById('message').innerHTML = `
+                <div class="message">
+                    <h3>🗑️ Все данные очищены!</h3>
+                    <p>Теперь можно добавить новых пользователей</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

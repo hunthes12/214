@@ -1,0 +1,11 @@
+# База данных пользователей МБОУ СОШ №19
+# Формат: id|имя|email|пароль|роль|дата_регистрации
+
+1|Директор школы|admin@school19.ru|admin123|admin|2024-01-15
+2|Завуч|zavuch@school19.ru|zavuch123|admin|2024-01-15
+3|Иванова Мария Петровна|teacher1@school19.ru|teacher123|teacher|2024-01-10
+4|Петров Алексей Владимирович|teacher2@school19.ru|teacher123|teacher|2024-01-10
+5|Сидорова Елена Ивановна|teacher3@school19.ru|teacher123|teacher|2024-01-10
+6|Сергеев Иван|student1@school19.ru|student123|student|2024-01-20
+7|Козлова Анна|student2@school19.ru|student123|student|2024-01-20
+8|Родитель Петрова|parent1@school19.ru|parent123|parent|2024-01-18

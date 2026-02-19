@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратная связь - МБОУ СОШ №19</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19 г. Белово</span>
+            </div>
+         <ul class="nav-menu">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="news.html">Новости</a></li>
+    <li><a href="schedule.html">Расписание</a></li>
+    <li><a href="structure.html">Структура</a></li>
+    <li><a href="contacts.html">Контакты</a></li>
+    <li><a href="feedback.html" class="active">Обратная связь</a></li>
+</ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Обратная связь</h1>
+            <div class="auth-container">
+                <form id="feedback-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="feedback-name">Ваше имя:</label>
+                        <input type="text" id="feedback-name" name="name" required placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback-email">Email:</label>
+                        <input type="email" id="feedback-email" name="email" required placeholder="example@mail.ru">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback-type">Тема обращения:</label>
+                        <select id="feedback-type" name="type" required>
+                            <option value="">Выберите тему</option>
+                            <option value="question">❓ Вопрос</option>
+                            <option value="suggestion">💡 Предложение</option>
+                            <option value="complaint">⚠️ Жалоба</option>
+                            <option value="praise">⭐ Благодарность</option>
+                            <option value="other">📄 Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback-message">Сообщение:</label>
+                        <textarea id="feedback-message" name="message" rows="5" required placeholder="Опишите ваш вопрос или предложение..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Отправить сообщение</button>
+                </form>
+                <div id="feedback-result" class="message"></div>
+
+                <div class="feedback-info">
+                    <h3>💬 Куда отправляются сообщения?</h3>
+                    <p>Все сообщения поступают администрации школы и обрабатываются в течение 1-2 рабочих дней.</p>
+                    <p>📞 Для срочных вопросов звоните по телефону: +7 (495) 123-45-67</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>МБОУ СОШ №19</h3>
+                    <p>г. Город, ул. Школьная, д. 19</p>
+                    <p>Телефон: +7 (495) 123-45-67</p>
+                    <p>Email: school19@example.com</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="news.html">Новости</a></li>
+                        <li><a href="schedule.html">Расписание</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function updateHeader() {
+            const user = JSON.parse(localStorage.getItem('current_user'));
+            const authButtons = document.getElementById('auth-buttons');
+            const userMenu = document.getElementById('user-menu');
+            const userName = document.getElementById('user-name');
+
+            if (user && authButtons && userMenu) {
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'flex';
+                userName.textContent = user.name;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('current_user');
+            window.location.href = 'index.html';
+        }
+
+        // Заполняем данные если пользователь авторизован
+        document.addEventListener('DOMContentLoaded', function() {
+            updateHeader();
+
+            const user = JSON.parse(localStorage.getItem('current_user'));
+            if (user) {
+                document.getElementById('feedback-name').value = user.name;
+                document.getElementById('feedback-email').value = user.email;
+            }
+        });
+
+        document.getElementById('feedback-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const feedbackData = {
+                id: Date.now(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                type: formData.get('type'),
+                message: formData.get('message'),
+                date: new Date().toISOString(),
+                status: 'new',
+                adminResponse: ''
+            };
+
+            // Сохраняем в localStorage
+            let feedbacks = JSON.parse(localStorage.getItem('school_feedbacks')) || [];
+            feedbacks.push(feedbackData);
+            localStorage.setItem('school_feedbacks', JSON.stringify(feedbacks));
+
+            const messageEl = document.getElementById('feedback-result');
+            messageEl.textContent = '✅ Сообщение отправлено! Мы ответим вам в ближайшее время.';
+            messageEl.className = 'message success';
+
+            // Очищаем форму
+            this.reset();
+
+            // Восстанавливаем данные пользователя если он авторизован
+            const user = JSON.parse(localStorage.getItem('current_user'));
+            if (user) {
+                document.getElementById('feedback-name').value = user.name;
+                document.getElementById('feedback-email').value = user.email;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание - МБОУ СОШ №19 г. Белово</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19 г. Белово</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="schedule.html" class="active">Расписание</a></li>
+                <li><a href="structure.html">Структура</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="feedback.html">Обратная связь</a></li>
+            </ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="AuthSystem.logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Расписание занятий МБОУ СОШ №19</h1>
+
+            <div class="schedule-tabs">
+                <button class="tab-button active" onclick="showSchedule('bells')">Расписание звонков</button>
+                <button class="tab-button" onclick="showSchedule('primary')">Начальная школа (мл.19)</button>
+                <button class="tab-button" onclick="showSchedule('middle')">Средняя школа (ср.27)</button>
+                <button class="tab-button" onclick="showSchedule('high')">Старшая школа (ст.38)</button>
+            </div>
+
+            <div id="bells-schedule" class="schedule-content active">
+                <div class="schedule-table">
+                    <h2>📢 Единое расписание звонков для всех подразделений</h2>
+                    <table>
+                        <tr>
+                            <th>Урок</th>
+                            <th>Время</th>
+                            <th>Продолжительность перемены</th>
+                        </tr>
+                        <tr>
+                            <td>1 урок</td>
+                            <td>8:30 - 9:15</td>
+                            <td>10 минут</td>
+                        </tr>
+                        <tr>
+                            <td>2 урок</td>
+                            <td>9:25 - 10:10</td>
+                            <td>10 минут</td>
+                        </tr>
+                        <tr>
+                            <td>3 урок</td>
+                            <td>10:20 - 11:05</td>
+                            <td>20 минут (большая перемена)</td>
+                        </tr>
+                        <tr>
+                            <td>4 урок</td>
+                            <td>11:25 - 12:10</td>
+                            <td>10 минут</td>
+                        </tr>
+                        <tr>
+                            <td>5 урок</td>
+                            <td>12:20 - 13:05</td>
+                            <td>10 минут</td>
+                        </tr>
+                        <tr>
+                            <td>6 урок</td>
+                            <td>13:15 - 14:00</td>
+                            <td>10 минут</td>
+                        </tr>
+                        <tr>
+                            <td>7 урок</td>
+                            <td>14:10 - 14:55</td>
+                            <td>5 минут</td>
+                        </tr>
+                    </table>
+                    <p class="schedule-note"><strong>Примечание:</strong> Для 1-х классов предусмотрены дополнительные динамические паузы</p>
+                </div>
+            </div>
+
+            <div id="primary-schedule" class="schedule-content">
+                <div class="schedule-table">
+                    <h2>👶 Расписание для начальной школы (мл.19) - 2А класс</h2>
+                    <table>
+                        <tr>
+                            <th>День недели</th>
+                            <th>Предметы</th>
+                            <th>Классный руководитель</th>
+                        </tr>
+                        <tr>
+                            <td>Понедельник</td>
+                            <td>Русский язык, Математика, Литературное чтение, Окружающий мир, Физкультура</td>
+                            <td>Иванова А.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Вторник</td>
+                            <td>Математика, Русский язык, Английский язык, Технология, Музыка</td>
+                            <td>Иванова А.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Среда</td>
+                            <td>Литературное чтение, Русский язык, Математика, ИЗО, ОРКСЭ</td>
+                            <td>Иванова А.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Четверг</td>
+                            <td>Математика, Русский язык, Английский язык, Окружающий мир, Физкультура</td>
+                            <td>Иванова А.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Пятница</td>
+                            <td>Русский язык, Литературное чтение, Математика, Классный час</td>
+                            <td>Иванова А.П.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="middle-schedule" class="schedule-content">
+                <div class="schedule-table">
+                    <h2>👦 Расписание для средней школы (ср.27) - 6Б класс</h2>
+                    <table>
+                        <tr>
+                            <th>День недели</th>
+                            <th>Предметы</th>
+                            <th>Классный руководитель</th>
+                        </tr>
+                        <tr>
+                            <td>Понедельник</td>
+                            <td>Математика, Русский язык, Литература, История, Биология</td>
+                            <td>Петрова С.И.</td>
+                        </tr>
+                        <tr>
+                            <td>Вторник</td>
+                            <td>Английский язык, География, Математика, Русский язык, Физкультура</td>
+                            <td>Петрова С.И.</td>
+                        </tr>
+                        <tr>
+                            <td>Среда</td>
+                            <td>Литература, Математика, Немецкий язык, Технология, ИЗО</td>
+                            <td>Петрова С.И.</td>
+                        </tr>
+                        <tr>
+                            <td>Четверг</td>
+                            <td>Русский язык, Математика, История, Музыка, ОБЖ</td>
+                            <td>Петрова С.И.</td>
+                        </tr>
+                        <tr>
+                            <td>Пятница</td>
+                            <td>Английский язык, География, Биология, Физкультура, Классный час</td>
+                            <td>Петрова С.И.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="high-schedule" class="schedule-content">
+                <div class="schedule-table">
+                    <h2>👨‍🎓 Расписание для старшей школы (ст.38) - 10А класс (физико-математический профиль)</h2>
+                    <table>
+                        <tr>
+                            <th>День недели</th>
+                            <th>Предметы</th>
+                            <th>Классный руководитель</th>
+                        </tr>
+                        <tr>
+                            <td>Понедельник</td>
+                            <td>Алгебра, Геометрия, Физика, Русский язык, Английский язык</td>
+                            <td>Сидоров В.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Вторник</td>
+                            <td>Информатика, Физика, Алгебра, Литература, История</td>
+                            <td>Сидоров В.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Среда</td>
+                            <td>Геометрия, Химия, Физика, Физкультура, Обществознание</td>
+                            <td>Сидоров В.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Четверг</td>
+                            <td>Алгебра, Информатика, Астрономия, Русский язык, Немецкий язык</td>
+                            <td>Сидоров В.П.</td>
+                        </tr>
+                        <tr>
+                            <td>Пятница</td>
+                            <td>Физика, Геометрия, Экономика, ОБЖ, Классный час</td>
+                            <td>Сидоров В.П.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="schedule-notes">
+                <h3>📋 Важная информация:</h3>
+                <ul>
+                    <li>Расписание может изменяться в течение учебного года</li>
+                    <li>Актуальное расписание публикуется в электронном дневнике</li>
+                    <li>Для индивидуального расписания обращайтесь к классному руководителю</li>
+                    <li>Внеурочная деятельность проводится согласно отдельному расписанию</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>МБОУ СОШ №19 г. Белово</h3>
+                    <p>652645, Кемеровская обл., г. Белово, пгт. Новый Городок, ул. Гражданская, 16</p>
+                    <p>Телефон: +7 (38452) 6-85-41</p>
+                    <p>Email: school19-belovo@mail.ru</p>
+                    <p>Директор: Рузанкина Татьяна Владимировна</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="structure.html">Структура школы</a></li>
+                        <li><a href="schedule.html">Расписание</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-structure">
+                    <h3>Наши подразделения</h3>
+                    <ul>
+                        <li>🏫 Начальная школа (мл.19)</li>
+                        <li>🏫 Средняя школа (ср.27)</li>
+                        <li>🏫 Старшая школа (ст.38)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function showSchedule(scheduleType) {
+            // Скрыть все расписания
+            document.querySelectorAll('.schedule-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Показать выбранное расписание
+            document.getElementById(scheduleType + '-schedule').classList.add('active');
+
+            // Добавить активный класс к нажатой кнопке
+            event.target.classList.add('active');
+        }
+    </script>
+    <style>
+        .schedule-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            border: none;
+            background: #ecf0f1;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .tab-button:hover {
+            background: #bdc3c7;
+        }
+
+        .schedule-content {
+            display: none;
+        }
+
+        .schedule-content.active {
+            display: block;
+        }
+
+        .schedule-table {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .schedule-table h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .schedule-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .schedule-table th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        .schedule-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .schedule-note {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e8f4fd;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .schedule-notes {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .schedule-notes h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-notes ul {
+            margin-left: 1.5rem;
+        }
+
+        .schedule-notes li {
+            margin-bottom: 0.5rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                text-align: center;
+            }
+
+            .schedule-table {
+                padding: 1rem;
+                overflow-x: auto;
+            }
+
+            .schedule-table table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</body>
+</html>

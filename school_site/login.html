@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - МБОУ СОШ №19</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19</span>
+            </div>
+            <ul class="nav-menu">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="news.html">Новости</a></li>
+    <li><a href="schedule.html">Расписание</a></li>
+    <li><a href="structure.html">Структура</a></li>
+    <li><a href="contacts.html">Контакты</a></li>
+</ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+                    <span>Привет, <span id="user-name"></span>!</span>
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="AuthSystem.logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-container">
+            <h1>Вход в систему</h1>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="email" required value="admin@school19.ru">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль:</label>
+                    <input type="password" id="login-password" name="password" required value="admin123">
+                </div>
+                <button type="submit" class="btn-primary">Войти</button>
+            </form>
+            <div id="login-message" class="message"></div>
+            <p class="auth-link">
+                Нет аккаунта? <a href="register.html">Зарегистрируйтесь</a>
+            </p>
+            <div class="teacher-login-info">
+                <p><strong>Тестовые аккаунты (уже заполнены):</strong></p>
+                <p>📧 admin@school19.ru | 🔑 admin123</p>
+                <p>📧 teacher@school19.ru | 🔑 teacher123</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const messageEl = document.getElementById('login-message');
+
+            console.log('Отправка формы:', email, password);
+
+            const result = AuthSystem.login(email, password);
+
+            if (result.success) {
+                messageEl.textContent = result.message;
+                messageEl.className = 'message success';
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 1000);
+            } else {
+                messageEl.textContent = result.message;
+                messageEl.className = 'message error';
+            }
+        });
+
+        // Предзаполняем форму для тестирования
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Страница входа загружена');
+        });
+    </script>
+</body>
+</html>

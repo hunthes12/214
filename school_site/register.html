@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - МБОУ СОШ №19</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span>🏫 МБОУ СОШ №19 г. Белово</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="structure.html">Структура</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="feedback.html">Обратная связь</a></li>
+            </ul>
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn-login">Войти</a>
+                    <a href="register.html" class="btn-register">Регистрация</a>
+                </div>
+                <div id="user-menu" class="user-menu" style="display: none;">
+                    <a href="profile.html" class="btn-profile">Профиль</a>
+                    <button onclick="AuthSystem.logout()" class="btn-logout">Выйти</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-container">
+            <h1>Регистрация</h1>
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="name">ФИО:</label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше полное имя">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@mail.ru">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required minlength="6" placeholder="Не менее 6 символов">
+                </div>
+                <div class="form-group">
+                    <label for="role">Роль:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Выберите роль</option>
+                        <option value="student">Ученик</option>
+                        <option value="parent">Родитель</option>
+                        <option value="teacher">Преподаватель</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Зарегистрироваться</button>
+            </form>
+            <div id="register-message" class="message"></div>
+            <p class="auth-link">
+                Уже есть аккаунт? <a href="login.html">Войдите</a>
+            </p>
+            <div class="teacher-login-info">
+                <p><strong>Тестовые аккаунты для входа:</strong></p>
+                <p>Администратор: admin@school19.ru / admin123</p>
+                <p>Преподаватель: teacher@school19.ru / teacher123</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>МБОУ СОШ №19 г. Белово</h3>
+                    <p>652645, Кемеровская обл., г. Белово, пгт. Новый Городок, ул. Гражданская, 16</p>
+                    <p>Телефон: +7 (38452) 6-85-41</p>
+                    <p>Email: school19-belovo@mail.ru</p>
+                    <p>Директор: Рузанкина Татьяна Владимировна</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="structure.html">Структура школы</a></li>
+                        <li><a href="schedule.html">Расписание</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-structure">
+                    <h3>Наши подразделения</h3>
+                    <ul>
+                        <li>🏫 Начальная школа (мл.19)</li>
+                        <li>🏫 Средняя школа (ср.27)</li>
+                        <li>🏫 Старшая школа (ст.38)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МБОУ "Средняя общеобразовательная школа №19 города Белово". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const userData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                role: formData.get('role')
+            };
+
+            console.log('Данные для регистрации:', userData);
+
+            const result = AuthSystem.register(userData);
+            const messageEl = document.getElementById('register-message');
+
+            messageEl.textContent = result.message;
+            messageEl.className = result.success ? 'message success' : 'message error';
+
+            if (result.success) {
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        });
+
+        AuthSystem.updateUI();
+    </script>
+</body>
+</html>
